@@ -9,9 +9,7 @@ dir_loc = "sobs/"
 library(data.table)
 library(tidyverse)
 
-###################
-# Helper Function
-###################
+#----- Load Helper Functions -----#
 
 source("path to function file here")
 #------------------
@@ -57,7 +55,7 @@ soybean2018 <- crop_inurance_by_county[CommodityName == "SOYBEANS" & CommodityYe
 
 
 #--------------------------
-# Add yield Exclusion Data
+# Add Yield Exclusion Data
 #--------------------------
 ye_corn <- read_csv("YE_data/YE_corn.csv", col_names = TRUE) %>% data.table()
 ye_corn[,"StateAbb" := state2abb(StateName)]
