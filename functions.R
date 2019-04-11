@@ -45,8 +45,21 @@ read_text_file <- function(){
   return(list(cov_by_county, irr_by_county))
 }
 
+# This function take in state name and return abbriviation of those states
 state2abb <- function(state_name){
   states <- state.name
   abb <- state.abb
   return(abb[match(state_name,states)])
+}
+
+# This function read in Yield Exclusion data
+# The data can be obtained from : https://legacy.rma.usda.gov/news/currentissues/aph/index.html
+
+readYE <-function(){
+  file_list <- list.files(path="YE_data")
+  ye_list <- lapply(file_list, function(x) read_csv(paste("YE_data/",x,sep="")) )
+  ye_list <- rbindlist(ye_list)
+  ye_list[,"StateAbb" := state2abb(StateName)]
+  ye_list <- ye_list[,!c("StateName","FIPS","Primary","Contiguous","YearEligible"),with=FALSE]
+  return(ye_list)
 }
